@@ -20,7 +20,7 @@ public class AuthService {
     }
 
     public UserResponse register(RegisterRequest registerRequest){
-        if(userRepository.existByEmail(registerRequest.email())){
+        if(userRepository.existsByEmail(registerRequest.email())){
             throw new IllegalArgumentException("Email is already Registered");
         }
 

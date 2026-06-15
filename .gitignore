@@ -31,3 +31,39 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# ==============================
+# Security & Environment Variables
+# ==============================
+.env
+.env.local
+
+# ==============================
+# Maven Compilation Output
+# ==============================
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# ==============================
+# IntelliJ IDEA / IDE Files
+# ==============================
+.idea/
+*.iml
+*.iws
+.classpath
+.project
+.settings/
+
+# ==============================
+# Logs
+# ==============================
+*.log
+
+# ==============================
+# OS Generated Files
+# ==============================
+.DS_Store
+Thumbs.db
