@@ -2,6 +2,11 @@ spring:
   application:
     name: campus-hire
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
   datasource:
     url: jdbc:postgresql://localhost:5432/campus_hire_users
     username: ${DB_USER:campus_admin}
