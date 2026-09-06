@@ -1,5 +1,6 @@
 package com.campushire.campus_hire.user.internal;
 
+import com.campushire.campus_hire.shared.security.JwtTokenService;
 import com.campushire.campus_hire.user.dto.LoginRequest;
 import com.campushire.campus_hire.user.dto.RegisterRequest;
 import com.campushire.campus_hire.user.dto.UserResponse;
