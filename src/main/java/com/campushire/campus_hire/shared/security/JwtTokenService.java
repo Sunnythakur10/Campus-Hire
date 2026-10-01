@@ -25,11 +25,11 @@ public class JwtTokenService {
 
     // --- GENERATION ---
 
-    public String generateAccessToken(UserEntity user) {
+    public String generateAccessToken(JwtUserData user) {
         return Jwts.builder()
-                .subject(user.getId().toString())
-                .claim("email", user.getEmail()) // Added so the filter can extract the email
-                .claim("role", user.getRole().name())
+                .subject(user.userId().toString())
+                .claim("email", user.email()) // Added so the filter can extract the email
+                .claim("role", user.role())
                 .id(UUID.randomUUID().toString()) // The JTI (JWT ID) needed for blacklisting
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpirationMs))
@@ -47,6 +47,10 @@ public class JwtTokenService {
     public String extractJti(String token) {
         // Extracts the unique ID of the token itself
         return extractClaim(token, Claims::getId);
+    }
+
+    public String extractRole(String token){
+        return extractClaim(token , claims -> claims.get("role" , String.class));
     }
 
     public long getRemainingExpirationTimeMs(String token) {

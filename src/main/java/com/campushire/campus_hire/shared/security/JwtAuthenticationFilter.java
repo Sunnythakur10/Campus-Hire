@@ -6,7 +6,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.NonNullFields;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -48,6 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // 3. Extract data from the token
             String userEmail = jwtTokenService.extractEmail(jwt);
             String jti = jwtTokenService.extractJti(jwt); // Extract the unique token ID
+            String userRole = jwtTokenService.extractRole(jwt);
 
             // 4. REDIS BLACKLIST CHECK (The Interview Flex)
             if (redisBlacklistService.isBlacklisted(jti)) {
@@ -65,7 +68,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userEmail,
                             null,
-                            Collections.emptyList() // We will add Roles here later
+                            Collections.singletonList(
+                                    new SimpleGrantedAuthority("Role" + userRole)
+                            ) // We will add Roles here later
                     );
 
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

@@ -1,6 +1,7 @@
 package com.campushire.campus_hire.user.internal;
 
 import com.campushire.campus_hire.shared.security.JwtTokenService;
+import com.campushire.campus_hire.shared.security.JwtUserData;
 import com.campushire.campus_hire.user.dto.LoginRequest;
 import com.campushire.campus_hire.user.dto.RegisterRequest;
 import com.campushire.campus_hire.user.dto.UserResponse;
@@ -49,7 +50,9 @@ public class AuthService {
             throw new IllegalArgumentException("Invalid Email or Password");
         }
 
-        return jwtTokenService.generateAccessToken(user);
+        JwtUserData jwtUserData = new JwtUserData(user.getId() , user.getEmail() , user.getRole().name());
+
+        return jwtTokenService.generateAccessToken(jwtUserData);
 
     }
 
